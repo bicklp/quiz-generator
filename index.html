@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+        crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="./css/worksheet.css"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+                <script type="text/javascript" src="./js/html2canvas.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+    <div class="row">
+       <div id='quiz_grid' class='col-md-12'>
+<table class="worksheet-table" style="width:300px;">
+    <tr>
+        <td>5</td>
+        <td>x</td>
+        <td>7</td>
+        <td>=</td>
+        <td style="border-bottom:1px solid #000; width:200px;"></td>
+
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>x</td>
+        <td>12</td>
+        <td>=</td>
+        <td style="border-bottom:1px solid #000; width:200px;"></td>
+
+    </tr>
+</table>
+        
+        
+        </div>
+
+    </div>
+    </div>
+    
+
+
+    <script>
+    // Default export is a4 paper, portrait, using millimeters for units
+    var doc = new jsPDF()
+
+
+
+  function BuildTable(){
+
+    var table = '<table class="table">';
+    table += '<tr><td></td><'
+
+  }
+
+    function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+    $(document).ready(function () {
+        var questions = getUrlVars()["q"];
+        var value1 = getUrlVars()["v1"];
+        var value2 = getUrlVars()["v2"];
+
+        printPDF();
+
+    });
+
+     function printPDF() {
+     var w = document.getElementById("quiz_grid").offsetWidth;
+         var h = document.getElementById("quiz_grid").offsetHeight;
+         html2canvas(document.getElementById("quiz_grid"), {
+             dpi: 300, // Set to 300 DPI
+             scale: 3, // Adjusts your resolution
+             onrendered: function (canvas) {
+                 var img = canvas.toDataURL("image/jpeg", 1);
+                 var doc = new jsPDF('L', 'px', [w, h]);
+                 doc.addImage(img, 'JPEG', 0, 0, w, h);
+                 doc.save('sample-file.pdf');
+             }
+         });      
+    
+    }
+    </script>
+</body>
+</html>
