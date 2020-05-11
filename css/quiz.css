@@ -1,3 +1,8 @@
 .quiz{
     font-size:30px;
 }
+
+
+.worksheet-table td{
+    padding:5px;
+}
